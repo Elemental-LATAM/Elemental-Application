@@ -15,7 +15,7 @@ class Project(models.Model):
     project_date = models.DateTimeField("since", blank=True, default=datetime.date.today)
     summary = models.CharField(max_length=140)
     description = models.TextField()
-    status = models.CharField(max_length=140, default=False)
+    status = models.CharField(max_length=140, default="En desarrollo")
     active = models.BooleanField(default=True)
     description_candidate = models.CharField(max_length=256, default="")
     timeline = models.CharField(max_length=2048, default="[]")
