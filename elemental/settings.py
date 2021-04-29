@@ -177,3 +177,6 @@ AUTHENTICATION_BACKENDS = (
  'core.backends.EmailBackend',
  'allauth.account.auth_backends.AuthenticationBackend',
  )
+
+if config('DJANGO_PRODUCTION', default=False, cast=bool):
+    from .settings_production import *
