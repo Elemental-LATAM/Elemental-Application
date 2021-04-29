@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<title>Elemental</title>
+		<meta name="description" content="Plataforma para la comunidad de investigación y emprendimiento Elemental.">
+		<meta name="keywords" content="Comunidad, Bioingeniería, Plataforma, Proyectos, Investigación, Emprendimiento">
+
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
+
+		<link rel="stylesheet" href="/static/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/static/fonts/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="/static/fonts/law-icons/font/flaticon.css">
+
+    <link rel="stylesheet" href="/static/fonts/fontawesome/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/fb38ff9278.js" crossorigin="anonymous"></script>
+    
+
+    <link rel="stylesheet" href="/static/css/slick.css">
+    <link rel="stylesheet" href="/static/css/slick-theme.css">
+
+    <link rel="stylesheet" href="/static/css/helpers.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/landing-2.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+    <style>
+
+.green-background {
+   background: linear-gradient(to right top, #a4de02, #71cb43, #47b55d, #2d9e6b, #2e856e) !important;
+}
+
+.green-backgroundb {
+  background-image: linear-gradient(to right top, #2e856e, #2d9e6b, #47b55d, #71cb43, #a4de02) !important;   
+}
+
+
+.nav-link{
+  color: #47b55d !important;
+}
+.pb_navbar.scrolled.pb_scrolled-light ul li a.active {
+  color: #47b55d !important;
+}
+.navbar-brand{
+  color: #47b55d !important;
+}
+@media screen and (min-width:768px) {
+  .hide-desktop {
+    display: none;
+  }
+}
+@media screen and (max-width:768px) {
+  .hide-mobile {
+    display: none;
+  }
+}
+.navbar {
+  background-color: rgba(0,0,0,0.6);
+}
+.pb_navbar .navbar-nav {
+  background-color: rgba(0,0,0,0);
+}
+.section-top {
+    box-sizing: border-box;
+    text-align: center !important;
+}
+
+a.filter {
+  color: #47b55d !important;
+}
+
+img.card-img-top {
+  max-height: 200px !important;
+  max-width: 200px !important;
+}
+div.card-square {
+  max-height: 400px !important;
+  max-width: 200px !important;
+}
+.google-btn {
+  width: 196px;
+  height: 42px;
+  background-color: #4285f4;
+  border-radius: 2px;
+  box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
+}
+.google-icon-wrapper {
+    position: absolute;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    background-color: #fff;
+  }
+  .google-icon {
+    position: absolute;
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 18px;
+    height: 18px;
+  }
+  .btn-text {
+    float: right;
+    margin: 11px 11px;
+    padding: 0px 0px 11px 0px;
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    font-family: "Roboto";
+  }
+  .google-btn:hover {
+    box-shadow: 0 0 6px #4285f4;
+  }
+  .google-btn:active {
+    background: #1669F2;
+  }
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:500);
+
+    </style>
+	</head>
+	<body data-spy="scroll" data-target="#pb-navbar" data-offset="200">
+
+    <nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="/">Elemental</a>
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#probootstrap-navbar" aria-controls="probootstrap-navbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span><i class="ion-navicon"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="probootstrap-navbar">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="{% url 'core:about'%}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'projects:proyectos'%}">Proyectos</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'members:miembros'%}">Miembros</a></li>
+            {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{{ user.get_absolute_url }}">Mi perfil</a></li>
+            {% if user.has_notifications %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'notes:peticiones' %}">
+                <b>Notificaciones</b>
+                <i class="fas fa-exclamation"></i>
+            </a>
+            </li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'notes:peticiones' %}">Notificaciones</a></li>
+            {% endif %}
+            <li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0"><a class="nav-link" href="/logout"><span class="pb_rounded-4 px-4">Logout</span></a></li>
+            {% else %}
+            <li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0"><a class="nav-link" href="/login"><span class="pb_rounded-4 px-4">Login</span></a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    {% if messages %}
+    <br><br><br> 
+    {% for message in messages %}
+      <div class = "alert alert-{{ message.tags }}">
+         {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      
+
+    <section style="padding-bottom: 200px;" class="pb_section pb_slant-light green-background" id="section-home">
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-6 text-center mb-5">
+            <h2 style="font-size: 62px; color: white;" class="heading mb-3">Elemental</h2>
+              <div style="font-size:20px; color: rgba(255,255,255,0.8);" class="sub-heading"><p>La red de investigación y emprendimiento que buscabas.</p></div>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div style="color: rgba(255,255,255,0.8);" class="media d-block text-left">
+              <div class="media-body">
+                <h5 class="mt-0 mb-3 heading">Busco un proyecto</h5>
+                <p class="text-sans-serif">Encuentra el proyecto del que siempre quisiste formar parte </p>
+                <p class="mb-5"><a class="btn btn-success btn-lg pb_btn-pill smoothscroll" href="{% url 'projects:proyectos' %}"><span class="pb_font-14 text-uppercase pb_letter-spacing-1">Ver proyectos</span></a></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div style="color: rgba(255,255,255,0.8);" class="media d-block text-left">
+              <div class="media-body">
+                <h5 class="mt-0 mb-3 heading">Busco un equipo</h5>
+                <p class="text-sans-serif">El equipo ideal para tu proyecto de investigación está aquí</p>
+                <p class="mb-5"><a class="btn btn-success btn-lg pb_btn-pill smoothscroll" href="{% url 'members:miembros' %}"><span class="pb_font-14 text-uppercase pb_letter-spacing-1">Ver comunidad</span></a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END section -->
+
+    <section class="pb_section bg-light pb_slant-white pb_pb-250" id="section-nosotros">
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-6 text-center mb-5">
+            <h5 class="text-uppercase pb_font-15 mb-2 pb_color-dark-opacity-3 pb_letter-spacing-2"><strong>Nosotros</strong></h5>
+            <h2>¿Qué es Elemental?</h2>
+            <div class="sub-heading">
+              <br>
+              <p class="mb-3">Somos la primera red en el Perú 
+                que conecta estudiantes universitarios, investigadores y emprendedores. 
+              </p>  
+              <p class="mb-3">Elemental te permite encontrar las mejores mentes para impulsar tu proyecto
+                 o unirte al que más se adapte a tu perfil. 
+              </p>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </section>
+    <!-- END section -->
+
+    <section class="pb_section pb_slant-light" id="section-pasos">
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-6 text-center mb-5">
+            <h5 class="text-uppercase pb_font-15 mb-2 pb_color-dark-opacity-3 pb_letter-spacing-2"><strong>¿Cómo formo parte?</strong></h5>
+            <h2>Pasos</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md- col-sm-6">
+            <div class="media d-block pb_feature-v1 text-left">
+              <div class="media-body">
+                <h5 class="mt-0 mb-3 heading">01. Regístrate</h5>
+                <p class="text-sans-serif">Llena tus datos y personaliza tu cuenta.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md- col-sm-6">
+            <div class="media d-block pb_feature-v1 text-left">
+              <div class="media-body">
+                <h5 class="mt-0 mb-3 heading">02. Preséntate</h5>
+                <p class="text-sans-serif">Cuéntale a las personas de tu experiencia en investigación y emprendimiento. Muéstranos tus principales intereses </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md- col-sm-6">
+            <div class="media d-block pb_feature-v1 text-left">
+              <div class="media-body">
+                <h5 class="mt-0 mb-3 heading">03. Únete</h5>
+                <p class="text-sans-serif">Postula a un proyecto o selecciona candidatos para el tuyo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END section -->
+
+
+    <section class="pb_xl_py_cover overflow-hidden pb_slant-light cover-bg-opacity-8 green-backgroundb" id="section-contact"  style="background-image: url(/static/images/1900x1200_img_5.jpg)">
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-5 justify-content-center">
+            <h2 class="heading mb-5 pb_font-40">Sé parte de nuestra comunidad</h2>
+            <div class="sub-heading">
+              <p class="mb-4">¿Quieres más información?</p>
+              <p class="mb-4">Escríbenos al correo: 
+                <a href="mailto:bioinnovacontacto@gmail.com">bioinnovacontacto@gmail.com</a>
+              </p>
+              <p class="mb-4">Llámanos o escríbenos al:
+                <a href="tel:995033637">+51 995033637</a>
+              </p>
+              </div>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-5 hide-mobile">
+             <form action="mailto:bioinnovacontacto@gmail.com" enctype="text/plain" method="post" class="bg-white rounded pb_form_v1">
+              <h2 class="mb-4 mt-0 text-center">Contáctanos</h2>
+              <div class="form-group">
+                <input type="text" class="form-control py-3 reverse" name="Nombre" placeholder="Nombre">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control py-3 reverse" name="Correo" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <textarea cols="30" rows="10" class="form-control" name="Mensaje" placeholder="Escríbanos..."></textarea>
+              </div>
+              <div class="form-group">
+                <input type="submit" class="btn btn-success btn-lg btn-block pb_btn-pill  btn-shadow-blue" value="Enviar">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END section -->
+
+
+
+    <footer class="pb_footer bg-light" role="contentinfo">
+      <div class="container">
+        <div class="row">
+          <div class="col text-center">
+            <p class="pb_font-14">&copy; 2019. All Rights Reserved. <br>  <a style="color: #71cb43" href="https://uicookies.com/bootstrap-html-templates/">Bootstrap Templates</a> by uiCookies</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+    <script src="/static/js/jquery.min.js"></script>
+
+    <script src="/static/js/popper.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/slick.min.js"></script>
+    <script src="/static/js/jquery.mb.YTPlayer.min.js"></script>
+
+    <script src="/static/js/jquery.waypoints.min.js"></script>
+    <script src="/static/js/jquery.easing.1.3.js"></script>
+
+    <script src="/static/js/main.js"></script>
+
+	</body>
+</html>

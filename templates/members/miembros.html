@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="pb_cover_v3 overflow-hidden cover-bg-opacity text-left  pb_slant-light green-background" id="section-home">
+    <div class="container">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-6">
+          <h2 class="heading mb-3">Nuestra comunidad</h2>
+          <div class="sub-heading">
+            {% if user.is_authenticated %}
+            <p class="mb-4">¿Buscas estudiantes universitarios para un proyecto?</p>
+            <p class="mb-4">1. Busca el perfil que desees</p>
+            <p class="mb-4">2. Revisa su información de contacto</p>
+            <p class="mb-4">3. ¡Conócelo! </p>
+            <br>
+          {% else %}
+          <p class="mb-4">¿Buscas estudiantes universitarios para un proyecto?</p>
+          <p class="mb-4">1. Busca el perfil que desees</p>
+          <p class="mb-4">2. Revisa su información de contacto</p>
+          <p class="mb-4">3. ¡Conócelo! </p>
+          <br>
+          <p class="mb-4">¿Aún no formas parte? ¡Únete!</p>
+          <p class="mb-5"><a class="btn btn-success btn-lg pb_btn-pill smoothscroll" href="{% url 'projects:add-project' %}"><span class="pb_font-14 text-uppercase pb_letter-spacing-1">Crear</span></a></p>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="anchor" class="pb_section pb_slant-light" id="section-pasos">
+    <div class="container">
+      <div style="margin-bottom: 10px !important; height: 80px !important;" class="row justify-content-center mb-5">
+        <div class="col-md-6 text-center mb-5">
+          <h5 class="text-uppercase pb_font-15 mb-2 pb_color-dark-opacity-3 pb_letter-spacing-2"><strong>La comunidad</strong></h5>
+          <h2>Todos los miembros</h2>
+        </div>
+      </div>
+      <div style="margin-top: 20px !important; margin-bottom: 10px !important; height: 80px !important; text-align: center;" class="row justify-content-center">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <a class="filter text-uppercase text-xs mb-2" href="{% url 'members:miembros-intereses' %}#anchor-filter">
+            Intereses
+          </a>
+        </div>
+        <div class="col-4">
+          <a class="filter text-uppercase text-xs mb-2" href="{% url 'members:miembros-skills' %}#anchor-filter">
+            Skills
+          </a>
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div style="margin-bottom: 20px !important; text-align: center;" class="hide-desktop row justify-content-center">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <a class="filter text-xs mb-2" href="{% url 'members:member-filter' %}">
+            Búsqueda avanzada
+          </a>
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="row">
+        <div class="col-2 border-left hide-mobile">
+          <h6><a class="filter text-xs mb-2" href="{% url 'members:member-filter' %}">Búsqueda Avanzada</a></h6>
+        </div>
+        <div class="col-2 hide-desktop"></div>
+        <div class="col-8">
+          <div class="row">
+            {% for member in object_list %}
+        
+        <div class="col-lg-4 col-md- col-sm-6">
+          <div class="media d-block pb_feature-v1 text-left">
+
+            <div class="card">
+              {% if member.image %}
+                  <img style="margin: auto; height: 200px; width: 200px; max-width: 100%;"  class="card-img-top" src="{{member.image.url}}" alt="Imagen de {{member.name}}">
+              {% else %}
+              <img style="margin: auto; height: 200px; width: 200px; max-width: 100%;"  class="card-img-top" src="imagen_predeterminada.png}" alt="Imagen de {{member.name}}">            
+                  {% endif %}
+                  <div class="card-body">
+                    <div class="card-title">{{ member.name }}</div>
+                    <div style="font-size: smaller;" class="card-text">
+                        {{ member.summary }}
+                    </div>
+                    <br>
+                    <div style="margin: 0 auto; width: 100%;" class="card-text"><a class="btn btn-success" href="{{member.get_absolute_url}}">Conocer</a></div>
+                    <br>
+                  </div>
+            </div>
+
+          </div>
+        </div>
+        {% endfor %}
+          </div>
+        </div>
+        <div class="col-2 border-right">
+        </div>
+        
+      </div>
+      <br>
+      <br>
+      <div style="display: flex; justify-content: center; align-items: center;" class="pagination ali">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a style="color: #47b55d" href="?page=1#anchor">&laquo; first</a>
+                <a style="color:#47b55d" href="?page={{ page_obj.previous_page_number }}#anchor">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a style="color:#47b55d" href="?page={{ page_obj.next_page_number }}#anchor">next</a>
+                <a style="color:#47b55d" href="?page={{ page_obj.paginator.num_pages }}#anchor">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    </div>
+  </section>
+
+{% endblock content %}

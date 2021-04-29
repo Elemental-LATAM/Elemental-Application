@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br><br><br>
+  <section class="pb_section pb_slant-light" id="section-pasos">
+    <div class="container">
+      <div style="margin-bottom: 10px !important; height: 80px !important;" class="row justify-content-center mb-5">
+        <div class="col-md-6 text-center mb-5">
+          <h5 class="text-uppercase pb_font-15 mb-2 pb_color-dark-opacity-3 pb_letter-spacing-2"><strong>Proyecto</strong></h5>
+          <h2>{{project.title}}</h2>
+          <h6><a class="filter" href="{{project.get_absolute_url}}">Ver proyecto</a></h6>
+        </div>
+      </div>
+      <div style="margin-top: 20px !important; margin-bottom: 10px !important; height: 80px !important; text-align: center;" class="row justify-content-center">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <a class="filter text-uppercase text-xs mb-2" href="{% url 'projects:project-delete-tags' slug=project.slug %}">
+            Ver los tags de {{project.title}}
+        </a>
+        </div>
+        <div class="col-2"></div>
+
+      </div>
+      <div style="margin: auto;" class="row">
+        <div id="navbarmobile" class="hide-desktop">
+          {% if categories %}
+          <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Categorías
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {% for category in categories %}
+              <a class="dropdown-item" href="{% url 'projects:project-add-tags' project_slug=project.slug category=category.slug %}">{{category.name}}</a>
+              {% endfor %}
+  
+            </div>
+          </div>
+          {% endif %}
+          <br>
+        </div>
+      </div> 
+      <div class="row">
+        <div class="col-2 border-left hide-mobile">
+              
+          <!-- Title -->
+          <h6 class="title">
+            Categorías
+          </h6>
+    
+          <!-- Sidenav -->
+          <nav class="sidenav d-flex flex-column mb-5 mb-md-0">
+            {% for category in categories %}
+            <a class="filter text-uppercase text-xs mb-2" href="{% url 'projects:project-add-tags' project_slug=project.slug category=category.slug %}">
+              {{category.name}}
+            </a>
+            {% endfor %}
+          </nav>
+        </div>
+        <div class="col-2 hide-desktop"></div>
+        <div class="col-8">
+          <div class="row">
+            {% for tag in tags %}
+        
+        <div class="col-lg-4 col-md- col-sm-6">
+          <div class="media d-block pb_feature-v1 text-left">
+
+          <div class="card card-square" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">{{ tag.name }}</h5>
+                  <a href="{% url 'projects:project-add-interest' project_slug=project.slug tag=tag.slug %}" class="btn btn-success">Añadir</a>
+                </div>
+              </div>
+          </div>
+        </div>
+        {% endfor %}
+          </div>
+        </div>
+        <div class="col-2 border-right">
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}

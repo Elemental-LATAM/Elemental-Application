@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="pb_cover_v3 overflow-hidden cover-bg-opacity text-left  pb_slant-light green-background" id="section-home">
+    <div class="container">
+      <a href="#anchor-filter"></a>
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-6">
+          <h2 class="heading mb-3">Nuestra comunidad</h2>
+          <div class="sub-heading">
+            {% if user.is_authenticated %}
+            <p class="mb-4">¿Buscas estudiantes universitarios para un proyecto?</p>
+            <p class="mb-4">1. Busca el perfil que desees</p>
+            <p class="mb-4">2. Revisa su información de contacto</p>
+            <p class="mb-4">3. ¡Conócelo! </p>
+            <br>
+          {% else %}
+          <p class="mb-4">¿Buscas estudiantes universitarios para un proyecto?</p>
+          <p class="mb-4">1. Busca el perfil que desees</p>
+          <p class="mb-4">2. Revisa su información de contacto</p>
+          <p class="mb-4">3. ¡Conócelo! </p>
+          <br>
+          <p class="mb-4">¿Aún no formas parte? ¡Únete!</p>
+          <p class="mb-5"><a class="btn btn-success btn-lg pb_btn-pill smoothscroll" href="/add-project"><span class="pb_font-14 text-uppercase pb_letter-spacing-1">Crear</span></a></p>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="anchor-filter" class="pb_section pb_slant-light" id="section-pasos">
+    <div class="container">
+      <div style="margin-bottom: 10px !important; height: 80px !important;" class="row justify-content-center mb-5">
+        <div class="col-md-6 text-center mb-5">
+          <h5 class="text-uppercase pb_font-15 mb-2 pb_color-dark-opacity-3 pb_letter-spacing-2"><strong>La comunidad</strong></h5>
+          <h2>Miembros por {{filter_used}}</h2>
+        </div>
+      </div>
+      <div style="margin-top: 20px !important; margin-bottom: 10px !important; height: 80px !important; text-align: center;" class="row justify-content-center">
+        <div class="col-2"></div>
+        {% if filter_interest %}
+        <div class="col-8">
+          <a class="filter text-uppercase text-xs mb-2" href="{% url 'members:miembros-skills' %}#anchor-filter">
+            Ir a Skills
+          </a>
+        </div>
+        {% else %}
+        <div class="col-8">
+          <a class="filter text-uppercase text-xs mb-2" href="{% url 'members:miembros-intereses' %}#anchor-filter">
+            Ir a Intereses
+          </a>
+        </div>
+        {% endif %}
+        <div class="col-2"></div>
+      </div>
+      {% if top_interests %}
+      <div style="margin-bottom: 10px !important; height: 80px !important; text-align: center;" class="hide-mobile row justify-content-center">
+        <div class="col-2"></div>
+        {% for interest in top_interests %}
+        <div class="col-2">
+          <a class="filter text-uppercase text-xs mb-2" href="{{interest.get_member_interest_url}}#anchor-filter">
+            {{ interest.name }}
+          </a>
+        </div>
+        {% endfor %}
+        <div class="col-2">
+          {% if non_top_interests %}
+          <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Más
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {% for interest in non_top_interests %}
+              <a class="dropdown-item" href="{{interest.get_project_interest_url}}">{{interest.name}}</a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+      
+      <div style="margin: auto;" class="row">
+        <div id="navbarmobile" class="hide-desktop">
+          {% if top_categories %}
+          <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Categorías
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a style="color:#47b55d;" class="dropdown-item" href="{% url 'projects:project-filter' %}">Búsqueda Avanzada</a>
+              {% for category in top_categories %}
+              <a class="dropdown-item" href="{{category.get_project_category_url}}#anchor-filter">{{category.name}}</a>
+              {% endfor %}
+  
+            </div>
+          </div>
+          {% endif %}
+          <br>
+        </div>
+      </div> 
+
+
+      <div class="row">
+        <div class="col-2 border-left hide-mobile">
+              
+          <!-- Title -->
+          <h6><a class="filter text-xs mb-2" href="{% url 'members:member-filter' %}">Búsqueda Avanzada</a></h6>
+          <h6 class="title">
+            Categorías
+          </h6>
+    
+          <!-- Sidenav -->
+          <nav class="sidenav d-flex flex-column mb-5 mb-md-0">
+            {% for category in top_categories %}
+            <a class="filter text-uppercase text-xs mb-2" href="{{ category.get_member_category_url }}#anchor-filter">
+              {{category.name}}
+            </a>
+            {% endfor %}
+          </nav>
+          {% if non_top_categories %}
+          <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Otros
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {% for category in non_top_categories %}
+              <a class="dropdown-item" href="{{category.get_project_category_url}}#anchor-filter">{{category.name}}</a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+        <div class="col-2 hide-desktop"></div>
+        <div class="col-8">
+          <div class="row">
+            {% if page_obj %}
+            {% for member_filter in page_obj %}
+        
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <div class="media d-block pb_feature-v1 text-left">
+
+          <div class="card card-square" style="width: 18rem;">
+            {%if member_filter.member.image%}
+                <img class="card-img-top" src="{{member_filter.member.image.url}}" alt="Imagen de {{member_filter.member.name}}">
+              {% endif %}
+                <div class="card-body">
+                  <h5 class="card-title">{{ member_filter.member.name }}</h5>
+                  <p class="card-text">{{ member_filter.member.summary }}</p>
+                  <br>
+                    <div style="margin: 0 auto; width: 100%;" class="card-text"><a class="btn btn-success" href="{{ member_filter.member.get_absolute_url }}">Conocer</a></div>
+                    <br>
+                </div>
+              </div>
+
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div style="height: 200px;" class="container">
+          <h3>Por el momento no hay miembros que coincidan con tu búsqueda...</h3>
+        </div>
+        {% endif %}
+          </div>
+        </div>
+        <div class="col-2 border-right">
+        </div>
+        
+      </div>
+      <br>
+      <br>
+      <div style="display: flex; justify-content: center; align-items: center;" class="pagination ali">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a style="color: #47b55d" href="?page=1#anchor-filter">&laquo; first</a>
+                <a style="color:#47b55d" href="?page={{ page_obj.previous_page_number }}#anchor-filter">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a style="color:#47b55d" href="?page={{ page_obj.next_page_number }}#anchor-filter">next</a>
+                <a style="color:#47b55d" href="?page={{ page_obj.paginator.num_pages }}#anchor-filter">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    </div>
+  </section>
+
+{% endblock content %}
