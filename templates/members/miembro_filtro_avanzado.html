@@ -1,0 +1,217 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div style="margin-top: 200px; margin-bottom: 200px;" class="container">
+  <div class="row hide-desktop">
+      <ol>
+        <li>Escoge las categorías</li>
+        <li>Escoge los tags</li>
+        <li>Conoce a los miembros</li>
+    
+      </ol>
+  </div>
+    <div class="row">
+    <div class="col-4">
+    
+    <div class="hide-mobile">
+      <ol>
+        <li>Escoge las categorías</li>
+        <li>Escoge los tags</li>
+        <li>Conoce a los miembros</li>
+    
+      </ol>
+    </div>
+    <form action="{% url 'members:member-filter'%}" method="GET">
+    <div class="container">
+      <h4 class="hide-desktop">Intereses</h4>
+    <h2 class="hide-mobile">Intereses</h2>
+    {% for interest_category in interest_categories %}
+        {% if interest_category.0 %}
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="{{ interest_category.1.slug }}" name="{{ interest_category.1.slug }}" checked>
+            <label class="form-check-label" for="{{ interest_category.1.slug }}">{{ interest_category.1 }}</label>
+          </div>
+        {% else %}
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="{{ interest_category.1.slug }}" name="{{ interest_category.1.slug }}">
+            <label class="form-check-label" for="{{ interest_category.1.slug }}">{{ interest_category.1 }}</label>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="container">
+      <h4 class="hide-desktop">Skills</h4>
+    <h2 class="hide-mobile">Skills</h2>
+    {% for skill_category in skill_categories %}
+        {% if skill_category.0 %}
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="{{ skill_category.1.slug }}" name="{{ skill_category.1.slug }}" checked>
+        <label class="form-check-label" for="{{ skill_category.1.slug }}">{{ skill_category.1 }}</label>
+      </div>
+      {% else %}
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="{{ skill_category.1.slug }}" name="{{ skill_category.1.slug }}">
+        <label class="form-check-label" for="{{ skill_category.1.slug }}">{{ skill_category.1 }}</label>
+      </div>
+      {% endif %}
+      {%endfor%}
+
+    </div>
+</div>
+
+<div class="hide-mobile">
+<div class="col-4">
+    <div class="container">
+        <h4 class="hide-desktop">Intereses escogidos:</h4>
+        <h2 class="hide-mobile">Intereses escogidos:</h2>
+        {% for interests_group in interests_groups %}
+        {% for interest in interests_group %}
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="{{interest.slug}}" value="on" name="{{interest.slug}}">
+            <label class="form-check-label" for="{{interest.slug}}">{{interest}}</label>
+          </div>
+          {% endfor %}
+          {% endfor %}
+    </div>
+
+</div>
+<div class="col-4">
+    <div class="container">
+      <h4 class="hide-desktop">Skills escogidos:</h4>
+      <h2 class="hide-mobile">Skills escogidos:</h2>
+        {% for skills_group in skills_groups %}
+        {% for skill in skills_group %}
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="{{skill.slug}}" value="on" name="{{skill.slug}}">
+            <label class="form-check-label" for="{{skill.slug}}">{{skill}}</label>
+          </div>
+          {% endfor %}
+          {% endfor %}
+    </div>
+
+</div>
+
+</div>
+<div class="hide-desktop">
+  <div class="col-12">
+      <div class="container">
+          <h4 class="hide-desktop">Intereses escogidos:</h4>
+          <h2 class="hide-mobile">Intereses escogidos:</h2>
+          {% for interests_group in interests_groups %}
+          {% for interest in interests_group %}
+          <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="{{interest.slug}}" value="on" name="{{interest.slug}}">
+              <label class="form-check-label" for="{{interest.slug}}">{{interest}}</label>
+            </div>
+            {% endfor %}
+            {% endfor %}
+      </div>
+  
+  </div>
+  <div class="col-12">
+      <div class="container">
+        <h4 class="hide-desktop">Skills escogidos:</h4>
+        <h2 class="hide-mobile">Skills escogidos:</h2>
+          {% for skills_group in skills_groups %}
+          {% for skill in skills_group %}
+          <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="{{skill.slug}}" value="on" name="{{skill.slug}}">
+              <label class="form-check-label" for="{{skill.slug}}">{{skill}}</label>
+            </div>
+            {% endfor %}
+            {% endfor %}
+      </div>
+  
+  </div>
+  
+  </div>
+
+</div>
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-2">
+        <br>
+        <button class="btn btn-primary" type="submit">
+            Buscar
+        </button>
+    </form></div>
+    
+    <div class="col-8">
+    </div>
+    
+</div>
+</div>
+
+
+
+
+
+<section id="anchor">
+<div style="margin-top: 200px; margin-bottom: 200px;" class="container">
+<div class="row">
+    <div class="col-2 border-left">
+    </div>
+    <div class="col-8">
+      <div class="row">
+        {% if page_obj %}
+        {% for member in page_obj %}
+    
+    <div class="col-lg-4 col-md- col-sm-6">
+      <div class="media d-block pb_feature-v1 text-left">
+
+        <div class="card">
+          {% if member.image %}
+              <img style="margin: auto; height: 200px; width: 200px; max-width: 100%;"  class="card-img-top" src="{{member.image.url}}" alt="Imagen de {{member.name}}">
+          {% else %}
+          <img style="margin: auto; height: 200px; width: 200px; max-width: 100%;"  class="card-img-top" src="imagen_predeterminada.png}" alt="Imagen de {{member.name}}">            
+              {% endif %}
+              <div class="card-body">
+                <div class="card-title">{{ member.name }}</div>
+                <div style="font-size: smaller;" class="card-text">
+                    {{ member.summary }}
+                </div>
+                <br>
+                    <div style="margin: 0 auto; width: 100%;" class="card-text"><a class="btn btn-success" href="{{member.get_absolute_url}}">Conocer</a></div>
+                    <br>
+              </div>
+            </div>
+
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div style="height: 200px;" class="container">
+      <h3>Por el momento no hay miembros que coincidan con tu búsqueda...</h3>
+    </div>
+    {% endif %}
+      </div>
+    </div>
+    <div class="col-2 border-right">
+    </div>
+    
+  </div>
+  <br>
+  <br>
+  <div style="display: flex; justify-content: center; align-items: center;" class="pagination ali">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a style="color: #47b55d" href="?page=1#anchor">&laquo; first</a>
+            <a style="color:#47b55d" href="?page={{ page_obj.previous_page_number }}#anchor">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a style="color:#47b55d" href="?page={{ page_obj.next_page_number }}#anchor">next</a>
+            <a style="color:#47b55d" href="?page={{ page_obj.paginator.num_pages }}#anchor">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+
+</section>
+{% endblock content %}

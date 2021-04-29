@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br><br><br>
+  <section class="pb_section pb_slant-light" id="section-pasos">
+    <div class="container">
+      <div style="margin-bottom: 10px !important; height: 80px !important;" class="row justify-content-center mb-5">
+        <div class="col-md-6 text-center mb-5">
+          <h5 class="text-uppercase pb_font-15 mb-2 pb_color-dark-opacity-3 pb_letter-spacing-2"><strong>{{project.title}}</strong></h5>
+          <h2>Tags de {{project.title}}</h2>
+          <h6><a class="filter" href="{{project.get_absolute_url}}">Ver proyecto</a></h6>
+        </div>
+      </div>
+      <div style="margin-top: 20px !important; margin-bottom: 10px !important; height: 80px !important; text-align: center;" class="row justify-content-center">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <a class="filter text-uppercase text-xs mb-2" href="{% url 'projects:project-add-tags' project_slug=project.slug category='computacion' %}">
+            Buscar nuevos tags
+          </a>
+        </div>
+        <div class="col-2"></div>
+
+      </div>
+      <div class="row">
+      <div class="col-12">
+        <h3>Intereses relacionados</h3>
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            {% for my_tag in interests %}
+        
+        <div class="col-lg-4 col-md- col-sm-6">
+          <div class="media d-block pb_feature-v1 text-left">
+
+          <div class="card card-square" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">{{ my_tag.get_tag_name }}</h5>
+                  <a href="{{ my_tag.get_delete_url }}" class="btn btn-warning">Borrar</a>
+                </div>
+              </div>
+          </div>
+        </div>
+        {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}

@@ -1,0 +1,90 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="pb_section pb_slant-white" id="section-faq">
+    <div class="container">
+      <div class="row justify-content-center mb-5">
+        <div class="col-md-6 text-center mb-5">
+          <h5 class="text-uppercase pb_font-15 mb-2 pb_color-dark-opacity-3 pb_letter-spacing-2"><strong>Mensajes</strong></h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+            <h2>Notificaciones</h2>
+            <br>
+            {% for notification in notifications %}
+            <div class="card" style="width: auto;">
+                <div class="card-body">
+                  <h5 class="card-title">{{notification.subject}}</h5>
+                  <p class="card-text">{{notification.message}}</p>
+                  <a href="{{ notification.get_delete_notification_url }}" class="btn btn-danger">Eliminar</a>
+                </div>
+              </div>
+              <br>
+            {% endfor %}
+        </div>
+            
+    </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-md">
+            <h2>Peticiones recibidas</h2>
+            <br>
+            {% for petition in join_requests %}
+            <div class="card" style="width: auto;">
+              <h5 class="card-header">{{petition.sender}}-{{petition.project.title}}</h5>
+                <div class="card-body">
+                  <h5 class="card-title">{{petition.subject}}</h5>
+                  <p class="card-text">{{petition.message}}</p>
+                  <a href="{{ petition.get_authorize_petition_url }}" class="btn btn-success">Unirme al proyecto</a>
+                  <a href="{{ petition.project.get_absolute_url }}" class="btn btn-warning">Ver proyecto</a>
+                  <a href="{{ petition.get_deny_petition_url }}" class="btn btn-danger">Eliminar</a>
+                </div>
+              </div>
+              <br>
+            {% endfor %}
+            {% for petition in invitations %}
+            <div class="card" style="width: auto;">
+              <h5 class="card-header">{{petition.sender}}-{{petition.project.title}}</h5>
+                <div class="card-body">
+                  <h5 class="card-title">{{petition.subject}}</h5>
+                  <p class="card-text">{{petition.message}}</p>
+                  <a href="{{ petition.get_authorize_petition_url }}" class="btn btn-success">Añadirlo al equipo</a>
+                  <a href="{{ petition.sender.get_absolute_url }}" class="btn btn-warning">Ver perfil</a>
+                  <a href="{{ petition.get_deny_petition_url }}" class="btn btn-danger">Eliminar</a>
+                </div>
+              </div>
+              <br>
+            {% endfor %}
+        </div>
+            
+    </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-md">
+            <h2>Peticiones enviadas</h2>
+            <br>
+            {% for petition in petitions_sent %}
+            <div class="card" style="width: auto;">
+              <h5 class="card-header">{{petition.receiver}}-{{petition.project.title}}</h5>
+                <div class="card-body">
+                  <h5 class="card-title">{{petition.subject}}</h5>
+                  <p class="card-text">{{petition.message}}</p>
+                  <a href="{{ petition.receiver.get_absolute_url }}" class="btn btn-warning">Ver perfil</a>
+                  <a href="{{ petition.get_deny_petition_url }}" class="btn btn-danger">Eliminar</a>
+                </div>
+              </div>
+              <br>
+            {% endfor %}
+        </div>
+            
+    </div>
+    </div>
+  </section>
+
+
+  {% endblock content %}

@@ -1,0 +1,58 @@
+
+
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+{% load socialaccount %}
+<div style="margin-top: 200px; margin-bottom: 200px;" class="container">
+<h1>Bienvenido</h1>
+<br>
+  {% if user.is_authenticated %}
+  <p>Bienvenido, {{ user.username }} !</p>
+ 
+  {% else %}
+  <form method="POST" action="{% url 'core:register'%}" class="bg-white rounded pb_form_v1" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="card">
+      <article class="card-body">
+        <a href="{% url 'core:login' %}" class="float-right btn btn-outline-primary">Sign in</a>
+        <h4 class="card-title mb-4 mt-1">Sign up</h4>
+        <p>
+          <a href="{% provider_login_url 'google' %}" class="btn btn-block btn-outline-danger"> <i class="fab fa-google"></i> Registro via Google</a>
+        </p>
+        <hr>
+          <div class="form-group">
+              <input name="email" class="form-control" placeholder="Email" type="email">
+          </div> <!-- form-group// -->
+          <div class="form-group">
+            <input name="username" class="form-control" placeholder="Username" type="text">
+        </div> <!-- form-group// -->
+          <div class="form-group">
+              <input name="password" class="form-control" placeholder="Password" type="password">
+          </div> <!-- form-group// -->  
+          <div class="form-group">
+            <input name="password2" class="form-control" placeholder="Password confirmation" type="password">
+        </div> <!-- form-group// --> 
+        <div class="form-group hide-desktop">
+          <input type="submit" class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue" value="Registrarme">
+      </div>                                   
+          <div class="row hide-mobile">
+              <div style="margin: 0 auto;" class="col-3">
+                  <div class="form-group">
+                      <button type="submit" class="btn btn-primary btn-block"> Registrarme  </button>
+                  </div> <!-- form-group// -->
+              </div>
+              <br>
+          </div> <!-- .row// -->                                                                  
+      </article>
+      </div> <!-- card.// -->
+    <br>
+     <p>¿Tienes una cuenta? <a href = "{% url 'core:login' %}">Login.</a></p>
+</form>
+  {% endif %}
+  
+</div>
+{% endblock content %}
