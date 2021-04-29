@@ -178,5 +178,5 @@ AUTHENTICATION_BACKENDS = (
  'allauth.account.auth_backends.AuthenticationBackend',
  )
 
-if config('DJANGO_PRODUCTION', default=False, cast=bool):
+if config('DJANGO_PRODUCTION', default=True, cast=bool):
     from .settings_production import *
