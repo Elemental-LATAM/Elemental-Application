@@ -13,10 +13,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('DJANGO_SECRET_KEY', default='Coloca la llave default que proporciona Django')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DJANGO_DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_WHITELIST = [
+    'https://elemental-latam.herokuapp.com',
+    'http://elemental-latam.herokuapp.com',
+    'https://herokuapp.com',
     'http://localhost:8000',
     'http://127.0.0.1:8000'
 ]
@@ -56,6 +59,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+)
 
 CORS_ORIGIN_ALLOW_ALL = True
 
